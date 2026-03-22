@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    /* Dark night theme — always dark */
+    --background: 0.09 0.018 260;
+    --background-alt: 0.115 0.022 258;
+    --foreground: 0.96 0.008 255;
+    --card: 0.155 0.022 258;
+    --card-alt: 0.175 0.026 256;
+    --card-foreground: 0.96 0.008 255;
+    --popover: 0.155 0.022 258;
+    --popover-foreground: 0.96 0.008 255;
+    --primary: 0.75 0.1 70;
+    --primary-foreground: 0.12 0.025 260;
+    --secondary: 0.175 0.026 256;
+    --secondary-foreground: 0.96 0.008 255;
+    --muted: 0.175 0.026 256;
+    --muted-foreground: 0.68 0.018 255;
+    --accent: 0.75 0.1 70;
+    --accent-foreground: 0.12 0.025 260;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.265 0.022 252;
+    --input: 0.265 0.022 252;
+    --ring: 0.75 0.1 70;
+    --chart-1: 0.75 0.1 70;
+    --chart-2: 0.55 0.14 255;
+    --chart-3: 0.45 0.12 240;
+    --chart-4: 0.65 0.08 200;
+    --chart-5: 0.7 0.1 80;
+    --sidebar: 0.12 0.022 260;
+    --sidebar-foreground: 0.96 0.008 255;
+    --sidebar-primary: 0.75 0.1 70;
+    --sidebar-primary-foreground: 0.12 0.025 260;
+    --sidebar-accent: 0.175 0.026 256;
+    --sidebar-accent-foreground: 0.96 0.008 255;
+    --sidebar-border: 0.265 0.022 252;
+    --sidebar-ring: 0.75 0.1 70;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Manrope", system-ui, sans-serif;
+    background-color: oklch(0.09 0.018 260);
+  }
+}
+
+@layer utilities {
+  .bg-background-alt {
+    background-color: oklch(var(--background-alt));
+  }
+  .bg-card-alt {
+    background-color: oklch(var(--card-alt));
+  }
+
+  /* Star/speckle texture for hero */
+  .stars-bg {
+    background-image: radial-gradient(
+        1px 1px at 10% 20%,
+        rgba(255, 255, 255, 0.35) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1px 1px at 30% 60%,
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1.5px 1.5px at 50% 15%,
+        rgba(255, 255, 255, 0.3) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1px 1px at 70% 45%,
+        rgba(255, 255, 255, 0.25) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1px 1px at 80% 80%,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1.5px 1.5px at 90% 30%,
+        rgba(255, 255, 255, 0.28) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1px 1px at 15% 75%,
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1px 1px at 60% 90%,
+        rgba(255, 255, 255, 0.18) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1px 1px at 45% 50%,
+        rgba(255, 255, 255, 0.12) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1px 1px at 25% 35%,
+        rgba(255, 255, 255, 0.22) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1px 1px at 85% 65%,
+        rgba(255, 255, 255, 0.18) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        1px 1px at 55% 25%,
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 100%
+      );
+  }
+
+  /* Fade-in animation for scroll reveals */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-in {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+  }
+}
