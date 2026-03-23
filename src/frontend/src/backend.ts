@@ -89,8 +89,27 @@ export class ExternalBlob {
         return this;
     }
 }
+export interface Ingredient {
+    name: string;
+    description: string;
+    benefit: string;
+}
+export interface Product {
+    name: string;
+    description: string;
+    category: string;
+    price: bigint;
+}
+export interface Testimonial {
+    customerName: string;
+    quote: string;
+    rating: bigint;
+}
 export interface backendInterface {
     checkHealth(): Promise<boolean>;
+    getIngredients(): Promise<Array<Ingredient>>;
+    getProducts(): Promise<Array<Product>>;
+    getTestimonials(): Promise<Array<Testimonial>>;
 }
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
@@ -105,6 +124,48 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.checkHealth();
+            return result;
+        }
+    }
+    async getIngredients(): Promise<Array<Ingredient>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getIngredients();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getIngredients();
+            return result;
+        }
+    }
+    async getProducts(): Promise<Array<Product>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getProducts();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getProducts();
+            return result;
+        }
+    }
+    async getTestimonials(): Promise<Array<Testimonial>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getTestimonials();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getTestimonials();
             return result;
         }
     }

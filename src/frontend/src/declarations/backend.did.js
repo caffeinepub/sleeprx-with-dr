@@ -8,14 +8,56 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const Ingredient = IDL.Record({
+  'name' : IDL.Text,
+  'description' : IDL.Text,
+  'benefit' : IDL.Text,
+});
+export const Product = IDL.Record({
+  'name' : IDL.Text,
+  'description' : IDL.Text,
+  'category' : IDL.Text,
+  'price' : IDL.Nat,
+});
+export const Testimonial = IDL.Record({
+  'customerName' : IDL.Text,
+  'quote' : IDL.Text,
+  'rating' : IDL.Nat,
+});
+
 export const idlService = IDL.Service({
   'checkHealth' : IDL.Func([], [IDL.Bool], ['query']),
+  'getIngredients' : IDL.Func([], [IDL.Vec(Ingredient)], ['query']),
+  'getProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
+  'getTestimonials' : IDL.Func([], [IDL.Vec(Testimonial)], ['query']),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
-  return IDL.Service({ 'checkHealth' : IDL.Func([], [IDL.Bool], ['query']) });
+  const Ingredient = IDL.Record({
+    'name' : IDL.Text,
+    'description' : IDL.Text,
+    'benefit' : IDL.Text,
+  });
+  const Product = IDL.Record({
+    'name' : IDL.Text,
+    'description' : IDL.Text,
+    'category' : IDL.Text,
+    'price' : IDL.Nat,
+  });
+  const Testimonial = IDL.Record({
+    'customerName' : IDL.Text,
+    'quote' : IDL.Text,
+    'rating' : IDL.Nat,
+  });
+  
+  return IDL.Service({
+    'checkHealth' : IDL.Func([], [IDL.Bool], ['query']),
+    'getIngredients' : IDL.Func([], [IDL.Vec(Ingredient)], ['query']),
+    'getProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
+    'getTestimonials' : IDL.Func([], [IDL.Vec(Testimonial)], ['query']),
+  });
 };
 
 export const init = ({ IDL }) => { return []; };
