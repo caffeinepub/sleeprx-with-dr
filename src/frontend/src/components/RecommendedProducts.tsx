@@ -2,6 +2,8 @@ import { Check, Copy, ShoppingBag } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
 
+const PINTEREST_BOARD_URL = "https://pin.it/oqXuSLVie";
+
 const categories = [
   {
     label: "Hair Oils",
@@ -103,14 +105,6 @@ const categories = [
           "A highly-moisturizing, reparative conditioner that rebuilds broken hair bonds with every wash. Leaves hair stronger, softer, and frizz-free. Color-safe and suitable for all hair types.",
         coupon: null,
       },
-      {
-        name: "Olaplex No. 5 Conditioner (100ml)",
-        image: "https://m.media-amazon.com/images/I/61wqz7GbPSL._SL1500_.jpg",
-        link: "https://amzn.in/d/01mkQ08q",
-        description:
-          "The mini 100ml version of Olaplex's iconic bond-repair conditioner — ideal for travel or a first try. Restores moisture, prevents frizz and split ends, and leaves hair visibly stronger with each use.",
-        coupon: null,
-      },
     ],
   },
   {
@@ -133,7 +127,7 @@ const categories = [
         coupon: null,
       },
       {
-        name: "Kérastase Genesis Anti-Hair Fall Serum",
+        name: "Kerastase Genesis Anti-Hair Fall Serum",
         image: "/assets/generated/kerastase-genesis-serum.dim_400x400.jpg",
         link: "https://amzn.in/d/0hDgBVpM",
         description:
@@ -188,6 +182,20 @@ type Product = {
   coupon: string | null;
 };
 
+function PinterestIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+      aria-label="Pinterest"
+      role="img"
+    >
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+    </svg>
+  );
+}
+
 function CouponBadge({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
 
@@ -223,6 +231,8 @@ function CouponBadge({ code }: { code: string }) {
 }
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
+  const pinterestShareUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "https://rootrecovery.com")}&media=${encodeURIComponent(product.image)}&description=${encodeURIComponent(`${product.name} - ${product.description}`)}`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -231,13 +241,24 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
       className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-[#EDE8E0]"
     >
-      <div className="aspect-square overflow-hidden bg-[#F5F1EB]">
+      <div className="relative aspect-square overflow-hidden bg-[#F5F1EB]">
         <img
           src={product.image}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           crossOrigin="anonymous"
         />
+        {/* Pinterest save button on hover */}
+        <a
+          href={pinterestShareUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-1.5 bg-[#E60023] text-white text-xs font-semibold px-2.5 py-1.5 rounded-full shadow-md"
+          aria-label="Save to Pinterest"
+        >
+          <PinterestIcon className="w-3 h-3" />
+          Save
+        </a>
       </div>
       <div className="flex flex-col flex-1 p-5 gap-3">
         <h3 className="font-semibold text-[#2C2C2C] text-base leading-snug">
@@ -289,6 +310,17 @@ export default function RecommendedProducts() {
             Carefully selected products backed by science and trusted by hair
             specialists to nourish, strengthen, and restore your hair.
           </p>
+          {/* Pinterest board link */}
+          <a
+            href={PINTEREST_BOARD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 rounded-full text-white text-sm font-semibold transition-opacity hover:opacity-90 shadow-sm"
+            style={{ backgroundColor: "#E60023" }}
+          >
+            <PinterestIcon className="w-4 h-4" />
+            Follow our Pinterest Board
+          </a>
         </motion.div>
 
         {/* Category filter tabs */}
